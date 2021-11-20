@@ -21,3 +21,5 @@ For ease of formatting, prettier was introduced in the IDE and a `.prettierrc.js
 
 For linting, **ESLint** was initialized using **npx eslin --init**<br />
 Attempted to use airbnb rules, but certain conflicts and eslint errors prevented it.
+
+Added **React Router 6** and established some very basic navigation.
