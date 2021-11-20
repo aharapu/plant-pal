@@ -18,3 +18,6 @@ npm install grommet grommet-icons styled-components --save
 To familiarize myself with using Grommet i followed the [tutorial](https://github.com/grommet/grommet-starter-new-app) found on their github.
 
 For ease of formatting, prettier was introduced in the IDE and a `.prettierrc.json` file was created.
+
+For linting, **ESLint** was initialized using **npx eslin --init**<br />
+Attempted to use airbnb rules, but certain conflicts and eslint errors prevented it.

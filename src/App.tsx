@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react';
+import { ReactElement, useState } from 'react';
 import {
   Box,
   Button,
@@ -23,19 +23,24 @@ const theme = {
   },
 };
 
-const AppBar = (props: { children: (string | ReactElement)[] }) => (
-  <Box
-    tag="header"
-    direction="row"
-    align="center"
-    justify="between"
-    background="brand"
-    pad={{ left: 'medium', right: 'small', vertical: 'small' }}
-    elevation="medium"
-    style={{ zIndex: 1 }}
-    {...props}
-  />
-);
+function AppBar(props: { children: (string | ReactElement)[] }) {
+  const { children } = props;
+
+  return (
+    <Box
+      tag="header"
+      direction="row"
+      align="center"
+      justify="between"
+      background="brand"
+      pad={{ left: 'medium', right: 'small', vertical: 'small' }}
+      elevation="medium"
+      style={{ zIndex: 1 }}
+    >
+      {children}
+    </Box>
+  );
+}
 
 function App() {
   const [sidebarIsShown, setSidebarIsShown] = useState(false);
