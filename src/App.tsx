@@ -19,6 +19,7 @@ const theme = {
 };
 
 // TODO -> add an event handler for when user authentication status changes to "empty" redirect to login
+// TODO -> create a protected route component to wrap around paths that need authentication
 
 function App() {
   return (
@@ -26,9 +27,9 @@ function App() {
       <Box fill>
         <PageContainer>
           <Routes>
-            <Route path='/login' element={<UnauthorizedHome />} />
+            <Route path='/signin' element={<UnauthorizedHome />} />
             <Route path='/home' element={<AuthorizedHome />} />
-            <Route path='*' element={<Navigate to='/login' />}></Route>
+            <Route path='*' element={<Navigate to='/signin' />}></Route>
           </Routes>
         </PageContainer>
       </Box>

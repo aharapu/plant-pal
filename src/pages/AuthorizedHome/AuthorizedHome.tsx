@@ -1,3 +1,17 @@
+import { getAuth, signOut } from 'firebase/auth';
+
 export function AuthorizedHome() {
-  return <p>welcom home, auth user</p>;
+  //TODO -> add logout button? perhaps on some navbar
+
+  function handleSignOut() {
+    const auth = getAuth();
+    signOut(auth);
+  }
+
+  return (
+    <div>
+      <p>welcom home, authorised user</p>
+      <button onClick={handleSignOut}>sign out</button>
+    </div>
+  );
 }

@@ -1,7 +1,7 @@
 import { Box } from 'grommet';
 import { ReactElement } from 'react';
 
-// TODO  make a proprtypes interface
+// TODO  make a propTypes interface
 
 export function AppBar(props: { children: string | ReactElement | (string | ReactElement)[] }) {
   const { children } = props;

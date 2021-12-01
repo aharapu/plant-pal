@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { Box, Button, Form, FormExtendedEvent, FormField, RadioButtonGroup, TextInput } from 'grommet';
 
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { firebaseConfig } from '../../config/firebase'; // TODO -> replace with env vars
+// import { useNavigate } from 'react-router-dom';
 
-initializeApp(firebaseConfig);
-
-type credentials = { email: string; password: string };
+// import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmail, signInWithEmail } from '../../adapters/authentication';
+import { Credentials } from '../../types';
 
 const SIGN_IN = 'Sign In';
 const SIGN_UP = 'Sign Up';
@@ -29,47 +27,52 @@ const radioGroupOptions = [
 // TODO Add validation to form
 
 export function UnauthorizedHome() {
+  // const navigate = useNavigate();
+
   const [authAction, setAuthAction] = useState(SIGN_IN);
   const [credentials, setCredentails] = useState(getEmptyFormState());
 
-  function handleSubmit({ value: credentials }: FormExtendedEvent<credentials, Element>) {
-    if (authAction === SIGN_UP) createNewUser(credentials);
+  function handleSubmit({ value: credentials }: FormExtendedEvent<Credentials, Element>) {
+    if (authAction === SIGN_UP) createUserWithEmail(credentials);
+    if (authAction === SIGN_IN) signInWithEmail(credentials);
   }
 
-  function createNewUser(credentials: credentials) {
-    console.log(`creating user with`, credentials);
-    const { email, password } = credentials;
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-      // TODO -> add a signIn handler function that redirects to home
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log('signed in as:', user);
-        console.log('userCredentaial:', userCredential);
-      })
-      .catch((error) => {
-        console.log(`error.code`, error.code);
-        console.log(`error.message`, error.message);
-      });
-  }
+  // function createNewUser(credentials: Credentials) {
+  //   console.log(`creating user with`, credentials);
+  //   const { email, password } = credentials;
+  //   const auth = getAuth();
+  //   createUserWithEmailAndPassword(auth, email, password)
+  //     // TODO -> add a signIn handler function that redirects to home
+  //     .then((userCredential) => {
+  //       // Signed in
+  //       const user = userCredential.user;
+  //       console.log('signed in as:', user);
+  //       console.log('userCredentaial:', userCredential);
+  //       // navigate('/home', { replace: true });
+  //     })
+  //     .catch((error) => {
+  //       console.log(`error.code`, error.code);
+  //       console.log(`error.message`, error.message);
+  //     });
+  // }
 
-  function signInUser(credentials: credentials) {
-    const { email, password } = credentials;
-    const auth = getAuth();
+  // function signInUser(credentials: Credentials) {
+  //   const { email, password } = credentials;
+  //   const auth = getAuth();
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        console.log('signed in as:', user);
-        console.log('userCredentaial:', userCredential);
-      })
-      .catch((error) => {
-        console.log(`error.code`, error.code);
-        console.log(`error.message`, error.message);
-      });
-  }
+  //   signInWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       // Signed in
+  //       const user = userCredential.user;
+  //       console.log('signed in as:', user);
+  //       console.log('userCredentaial:', userCredential);
+  //       // navigate('/home', { replace: true });
+  //     })
+  //     .catch((error) => {
+  //       console.log(`error.code`, error.code);
+  //       console.log(`error.message`, error.message);
+  //     });
+  // }
 
   return (
     <Box direction='row' justify='center' align='center' fill>
