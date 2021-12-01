@@ -18,6 +18,8 @@ const theme = {
   },
 };
 
+// TODO -> add an event handler for when user authentication status changes to "empty" redirect to login
+
 function App() {
   return (
     <Grommet theme={theme} themeMode='dark' full>
