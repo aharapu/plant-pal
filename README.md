@@ -36,3 +36,9 @@ Grommet forms seem to somehow "communicate" with the form elements that they hol
 
 1. **Firebase** was chosen as the SAAS of choice for authentication and data management. My private google account ( al\*\*@gmail.com ) was used for setting up. A new project called **PlantPal** ( firebase id is _pp-plant-pal_ ) was created in the [console](https://console.firebase.google.com/). Additionally, analytics was turned on with region "Romania".
 1. Instructions found in the [firebase docs](https://firebase.google.com/docs/web/setup) were used to add an app.
+
+### Data storage
+
+I activated Cloud Firestore for the Firebase project, and selected the **eur3** as the region.
+
+Access to data is restricted using Cloud Firestore rules. The first rules set are for a user to be able to create, read and update his own data, indexed by using a document id equal to the users unique id (uid).

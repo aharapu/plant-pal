@@ -1,78 +1,26 @@
 import { useState } from 'react';
 import { Box, Button, Form, FormExtendedEvent, FormField, RadioButtonGroup, TextInput } from 'grommet';
 
-// import { useNavigate } from 'react-router-dom';
-
-// import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { createUserWithEmail, signInWithEmail } from '../../adapters/authentication';
 import { Credentials } from '../../types';
-
-const SIGN_IN = 'Sign In';
-const SIGN_UP = 'Sign Up';
-
-const radioGroupOptions = [
-  {
-    id: 'sign-in',
-    label: SIGN_IN,
-    value: SIGN_IN,
-  },
-  {
-    id: 'sign-up',
-    label: SIGN_UP,
-    value: SIGN_UP,
-  },
-];
+import { RADIO_GROUP_OPTIONS, SIGN_IN, SIGN_UP } from './constants';
 
 // TODO Add confirm password when selecting sign up
 // TODO Add validation to form
 
 export function UnauthorizedHome() {
-  // const navigate = useNavigate();
-
   const [authAction, setAuthAction] = useState(SIGN_IN);
   const [credentials, setCredentails] = useState(getEmptyFormState());
 
   function handleSubmit({ value: credentials }: FormExtendedEvent<Credentials, Element>) {
-    if (authAction === SIGN_UP) createUserWithEmail(credentials);
-    if (authAction === SIGN_IN) signInWithEmail(credentials);
+    if (authAction === SIGN_UP) createUserWithEmail(credentials).catch(handleCreateUserError);
+    if (authAction === SIGN_IN) signInWithEmail(credentials).catch(console.error);
   }
 
-  // function createNewUser(credentials: Credentials) {
-  //   console.log(`creating user with`, credentials);
-  //   const { email, password } = credentials;
-  //   const auth = getAuth();
-  //   createUserWithEmailAndPassword(auth, email, password)
-  //     // TODO -> add a signIn handler function that redirects to home
-  //     .then((userCredential) => {
-  //       // Signed in
-  //       const user = userCredential.user;
-  //       console.log('signed in as:', user);
-  //       console.log('userCredentaial:', userCredential);
-  //       // navigate('/home', { replace: true });
-  //     })
-  //     .catch((error) => {
-  //       console.log(`error.code`, error.code);
-  //       console.log(`error.message`, error.message);
-  //     });
-  // }
-
-  // function signInUser(credentials: Credentials) {
-  //   const { email, password } = credentials;
-  //   const auth = getAuth();
-
-  //   signInWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       // Signed in
-  //       const user = userCredential.user;
-  //       console.log('signed in as:', user);
-  //       console.log('userCredentaial:', userCredential);
-  //       // navigate('/home', { replace: true });
-  //     })
-  //     .catch((error) => {
-  //       console.log(`error.code`, error.code);
-  //       console.log(`error.message`, error.message);
-  //     });
-  // }
+  // TODO -> avoid any
+  function handleCreateUserError() {
+    // TODO -> pop a toaster stating the error
+  }
 
   return (
     <Box direction='row' justify='center' align='center' fill>
@@ -81,7 +29,7 @@ export function UnauthorizedHome() {
           name='auth-action'
           direction='row'
           margin={{ bottom: 'medium' }}
-          options={radioGroupOptions}
+          options={RADIO_GROUP_OPTIONS}
           value={authAction}
           onChange={(event) => setAuthAction(event.target.value)}
         />
@@ -106,7 +54,7 @@ export function UnauthorizedHome() {
   );
 }
 
-function getEmptyFormState() {
+function getEmptyFormState(): Credentials {
   return {
     email: '',
     password: '',
